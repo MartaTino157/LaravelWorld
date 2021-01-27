@@ -22,4 +22,6 @@ Route::get('/', function () {
 Route::get('/countries', 'CountryController@index');
 Route::get('/detail/{country}', 'CountryController@show');
 
+Route::get('/search/', 'CountryController@search')->name('search');
+
 Route::get('/cities', 'CityController@index');

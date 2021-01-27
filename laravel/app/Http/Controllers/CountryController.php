@@ -52,6 +52,15 @@ class CountryController extends Controller
         return view('countries.show', compact('country'));
     }
 
+    public function search(Request $request){
+        $search = $request->input('search');
+        $countries = Country::query()
+            ->where('Name', 'LIKE', "%{$search}%")
+            ->orWhere('Continent', 'LIKE', "%{$search}%")
+            ->get();
+        return view('countries.searchCountry', compact('countries'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

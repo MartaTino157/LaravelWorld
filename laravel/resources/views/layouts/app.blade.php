@@ -40,6 +40,12 @@
 					</li>
 					@endif
 				</ul>
+				<div class="nav navbar-nav navbar-right" style="margin-top: 40px; margin-right: -150px;">
+					<form action="{{ route('search') }}" method="GET">
+						<input type="text" name="search" required/>
+						<button type="submit">Search</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</nav>
