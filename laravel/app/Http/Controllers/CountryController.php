@@ -61,6 +61,11 @@ class CountryController extends Controller
         return view('countries.searchCountry', compact('countries'));
     }
 
+    public function listContinent() {
+        $continents = Country::distinct()->get('continent');
+        return view('countries.countryContinent', compact('continents'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

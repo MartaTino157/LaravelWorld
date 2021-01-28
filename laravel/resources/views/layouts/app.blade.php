@@ -23,6 +23,7 @@
 				<a class="navbar-brand" href="{{ url('/') }}">Home </a>
 				<a class="navbar-brand" href="{{ url('/countries') }}">Countries list</a>
 				<a class="navbar-brand" href="{{ url('/cities') }}">Cities list</a>
+				<a class="navbar-brand" href="{{ url('/continent') }}">Countries by Countinent</a>
 			</div>
 			<div class="collapse navbar-collapse" id="app-navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">

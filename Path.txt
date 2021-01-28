@@ -1,1 +1,1 @@
-c:\xampp\htdocs\JKTVR19\Laravel2021
+cd c:\xampp\htdocs\JKTVR19\Laravel2021\laravel
