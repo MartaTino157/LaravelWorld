@@ -99,4 +99,61 @@ class CountryController extends Controller
     {
         //
     }
+
+    public function filterCountry() {
+        $continents = Country::distinct()->get('continent');
+        $governments = Country::distinct()->get('GovernmentForm');
+        $countries = Country::orderBy('Code', 'asc')->get();
+        $numberMin = Country::query()
+            ->whereNotNull('IndepYear')
+            ->orderBy('IndepYear', 'asc')->first();
+        $numberMax = Country::orderBy('IndepYear', 'desc')->first();
+
+        return view('countries.countryFilter', compact('continents','governments', 'countries', 'numberMin', 'numberMax'));
+    }
+
+    public function filterShow(Request $request) {
+        //------------------- читаем данные из формы
+        $continent = $request->input('continent');
+        $government = $request->input('government');
+        $numberFrom = $request->input('numberFrom');
+        $numberTo = $request->input('numberTo');
+        //------------------- запросы по переданным данным
+        $countries = Country::query()
+            ->where('Continent', 'LIKE', "%{$continent}%")
+            ->where('GovernmentForm', 'LIKE', "%{$government}%")
+            ->where('IndepYear', '>=', "{$numberFrom}")
+            ->where('IndepYear', '<=', "{$numberTo}")
+            ->get();
+
+        if($numberFrom == '' && $numberTo == '') {
+            $countries = Country::query()
+            ->where('Continent', 'LIKE', "%{$continent}%")
+            ->where('GovernmentForm', 'LIKE', "%{$government}%")
+            ->get();
+
+        }elseif ($numberFrom == '') {
+            $countries = Country::query()
+            ->where('Continent', 'LIKE', "%{$continent}%")
+            ->where('GovernmentForm', 'LIKE', "%{$government}%")
+            ->where('IndepYear', '<=', "{$numberTo}")
+            ->get();
+
+        }elseif ($numberTo == '') {
+            $countries = Country::query()
+            ->where('Continent', 'LIKE', "%{$continent}%")
+            ->where('GovernmentForm', 'LIKE', "%{$government}%")
+            ->where('IndepYear', '>=', "{$numberFrom}")
+            ->get();
+        }
+        //------------------- запросы для заполнения формы фильтрации
+        $continents = Country::distinct()->get('continent');
+        $governments = Country::distinct()->get('GovernmentForm');
+        $numberMin = Country::query()
+            ->whereNotNull('IndepYear')
+            ->orderBy('IndepYear', 'asc')->first();
+        $numberMax = Country::orderBy('IndepYear', 'desc')->first();
+
+        return view('countries.countryFilter', compact('continents','governments', 'countries', 'numberMin', 'numberMax'));
+    }
 }
